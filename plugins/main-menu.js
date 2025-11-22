@@ -90,8 +90,8 @@ let handler = async (m, { conn, usedPrefix }) => {
                   name: "cta_url",
                   buttonParamsJson: JSON.stringify({
                     display_text: "☆ Canal",
-                    url: "https://whatsapp.com/channel/0029VaJxgcB0bIdvuOWKTM1h",
-                    merchant_url: "https://whatsapp.com/channel/0029VaJxgcB0bIdvuOWKTM1h"
+                    url: "https://chat.whatsapp.com/JcMa6Incw3g4YmNo4iim3Q?mode=hqrt3",
+                    merchant_url: "https://chat.whatsapp.com/JcMa6Incw3g4YmNo4iim3Q?mode=hqrt3"
                   })
                 }
               ],
@@ -105,8 +105,8 @@ let handler = async (m, { conn, usedPrefix }) => {
                 title: "⋆˚❏ 𝖬𝖾𝗇𝗎 𝖽𝖾 𝖼𝗈𝗆𝖺𝗇𝖽𝗈𝗌",
                 body: "Invitación al grupo oficial",
                 thumbnail: thumbnailBuffer,
-                thumbnailUrl: "https://chat.whatsapp.com/Ca25rmjW0qKJRIw9rzMaYA?mode=wwt",
-                sourceUrl: "https://chat.whatsapp.com/Ca25rmjW0qKJRIw9rzMaYA?mode=wwt",
+                thumbnailUrl: "https://chat.whatsapp.com/JcMa6Incw3g4YmNo4iim3Q?mode=hqrt3",
+                sourceUrl: "https://chat.whatsapp.com/JcMa6Incw3g4YmNo4iim3Q?mode=hqrt3",
                 mediaType: 1,
                 renderLargerThumbnail: true
               }
