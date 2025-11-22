@@ -27,7 +27,7 @@ const handler = async (m, { conn, command, text, usedPrefix }) => {
   const configPath = path.join(botPath, 'config.json')
 
   if (!fs.existsSync(botPath)) {
-    return m.reply(`✿ *Acceso denegado.*\n\n✎ *Este comando es exclusivo para usuarios con Sub-Bots activos (carpeta JadiBots).*`)
+    return m.reply(`✿ *Acceso denegado.*\n\n✎ *Este comando es exclusivo para usuarios con SubBots activos.*`)
   }
 
   let config = {}
