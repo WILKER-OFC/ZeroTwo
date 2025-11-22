@@ -18,7 +18,7 @@ conn.reply(m.chat, '✎ Ocurrió un error buscando los grupos.', m)
 }}
 
 handler.command = ['wagroups']
-handler.tags = ['search']
-handler.help = ['wpgroups', 'wagroups', 'wgrupos']
+handler.tags = ['tools']
+handler.help = ['wagroups']
 
 export default handler
