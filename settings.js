@@ -21,7 +21,7 @@ global.dev = '© 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 𝐂𝐥𝐮𝐛 𝐀.�
 global.author = '✿ 𝐌𝐚𝐝𝐞 𝐰𝐢𝐭𝐡 𝐂𝐥𝐮𝐛 𝐀.𝐘.𝐌'
 global.etiqueta = '𝐂𝐥𝐮𝐛 𝐀.𝐘.𝐌 ✎'
 global.currency = '€ 𝐄𝐮𝐫𝐨𝐬'
-global.banner = "https://raw.githubusercontent.com/The-King-Destroy/Adiciones/main/Contenido/1742678744381.jpeg"
+global.banner = "https://qu.ax/TkbrV.jpg"
 global.icono = "https://raw.githubusercontent.com/The-King-Destroy/Adiciones/main/Contenido/1742678797993.jpeg"
 global.catalogo = fs.readFileSync('./lib/catalogo.jpg')
 
