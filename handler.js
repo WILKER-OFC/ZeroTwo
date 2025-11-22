@@ -50,7 +50,7 @@ export async function handler(chatUpdate) {
     let m = chatUpdate.messages[chatUpdate.messages.length - 1]
     if (!m) return
     if (global.db.data == null) await global.loadDatabase()
-    
+
     loadBotConfig(this)
 
     try {
@@ -167,7 +167,7 @@ export async function handler(chatUpdate) {
                 await delay(time)
             }, time)
         }
- 
+
         if (m.isBaileys) return
         m.exp += Math.ceil(Math.random() * 10)
         let usedPrefix
@@ -298,6 +298,10 @@ export async function handler(chatUpdate) {
 
                 if (!isAccept) continue
                 m.plugin = name
+
+                await this.sendPresenceUpdate('composing', m.chat)
+                
+
                 global.db.data.users[m.sender].commands++
                 if (chat) {
                     const botId = this.user.jid
