@@ -51,7 +51,7 @@ yukiJadiBot(yukiJBOptions)
 global.db.data.users[m.sender].Subs = new Date * 1
 }
 handler.help = ['qr', 'code']
-handler.tags = ['sockets']
+handler.tags = ['socket']
 handler.command = ['qr', 'code']
 export default handler 
 
