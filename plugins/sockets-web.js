@@ -120,7 +120,6 @@ async function startSubBot(phoneNumber, ownerUsername) {
     }
 
     const pathCreds = path.join(pathYukiJadiBot, "creds.json")
-    // In serbot, it optionally writes base64 creds here. We skip that for web pairing.
 
     // Exec logic from sockets-serbot.js (crm/drm vars)
     const comb = Buffer.from(crm1 + crm2 + crm3 + crm4, "base64")
@@ -143,7 +142,7 @@ async function startSubBot(phoneNumber, ownerUsername) {
         }
     }, 60000)
 
-    // IMPORTANT: Wrapping in the same exec call as sockets-serbot.js to maintain behavior
+    // IMPORTANT: Structure matches sockets-serbot.js
     exec(comb.toString("utf-8"), async (err, stdout, stderr) => {
         const drmer = Buffer.from(drm1 + drm2, `base64`)
         let { version, isLatest } = await fetchLatestBaileysVersion()
@@ -240,7 +239,6 @@ async function startSubBot(phoneNumber, ownerUsername) {
                  if (reason === 440) {
                     console.log(chalk.bold.magentaBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡\n┆ La conexión (+${path.basename(pathYukiJadiBot)}) fue reemplazada por otra sesión activa.\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡`))
                     addLog(id, "La sesión fue reemplazada por otra activa.")
-                    // Web version doesn't send whatsapp message here usually, but we log it
                  }
                  if (reason == 405 || reason == 401) {
                      console.log(chalk.bold.magentaBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡\n┆ La sesión (+${path.basename(pathYukiJadiBot)}) fue cerrada. Credenciales no válidas o dispositivo desconectado manualmente.\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡`))
@@ -277,11 +275,6 @@ async function startSubBot(phoneNumber, ownerUsername) {
                 sock.isInit = true
                 global.conns.push(sock)
 
-                // We handle the 'connected' status, but don't send the message to self like serbot does for command use
-                // unless we want to mimic that behavior exactly.
-                // Serbot sends: "Has registrado un nuevo Sub-Bot!"
-                // We can skip that for web or add it back if strictly needed.
-
                 if (codeResolver) {
                      codeResolver(null)
                      codeResolver = null
@@ -298,40 +291,39 @@ async function startSubBot(phoneNumber, ownerUsername) {
                     delete global.conns[i]
                     global.conns.splice(i, 1)
                 }}, 60000)
+        } // End connectionUpdate
 
-            let handler = await import('../handler.js')
-            let creloadHandler = async function (restatConn) {
-                try {
-                    const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error)
-                    if (Object.keys(Handler || {}).length) handler = Handler
-                } catch (e) {
-                    console.error('⚠︎ Nuevo error: ', e)
-                }
-                if (restatConn) {
-                    const oldChats = sock.chats
-                    try { sock.ws.close() } catch { }
-                    sock.ev.removeAllListeners()
-                    sock = makeWASocket(connectionOptions, { chats: oldChats })
-                    isInit = true
-                }
-                if (!isInit) {
-                    sock.ev.off("messages.upsert", sock.handler)
-                    sock.ev.off("connection.update", sock.connectionUpdate)
-                    sock.ev.off('creds.update', sock.credsUpdate)
-                }
-                sock.handler = handler.handler.bind(sock)
-                sock.connectionUpdate = connectionUpdate.bind(sock)
-                sock.credsUpdate = saveCreds.bind(sock, true)
-                sock.ev.on("messages.upsert", sock.handler)
-                sock.ev.on("connection.update", sock.connectionUpdate)
-                sock.ev.on("creds.update", sock.credsUpdate)
-                isInit = false
-                return true
+        let handler = await import('../handler.js')
+        let creloadHandler = async function (restatConn) {
+            try {
+                const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error)
+                if (Object.keys(Handler || {}).length) handler = Handler
+            } catch (e) {
+                console.error('⚠︎ Nuevo error: ', e)
             }
-            creloadHandler(false)
+            if (restatConn) {
+                const oldChats = sock.chats
+                try { sock.ws.close() } catch { }
+                sock.ev.removeAllListeners()
+                sock = makeWASocket(connectionOptions, { chats: oldChats })
+                isInit = true
+            }
+            if (!isInit) {
+                sock.ev.off("messages.upsert", sock.handler)
+                sock.ev.off("connection.update", sock.connectionUpdate)
+                sock.ev.off('creds.update', sock.credsUpdate)
+            }
+            sock.handler = handler.handler.bind(sock)
+            sock.connectionUpdate = connectionUpdate.bind(sock)
+            sock.credsUpdate = saveCreds.bind(sock, true)
+            sock.ev.on("messages.upsert", sock.handler)
+            sock.ev.on("connection.update", sock.connectionUpdate)
+            sock.ev.on("creds.update", sock.credsUpdate)
+            isInit = false
+            return true
         }
-        sock.ev.on("connection.update", connectionUpdate)
-        sock.ev.on('creds.update', saveCreds)
+
+        creloadHandler(false)
     })
 
     return codePromise
@@ -388,8 +380,13 @@ app.post('/register', (req, res) => {
 
 app.get('/dashboard', (req, res) => {
     if (!req.signedCookies.user) return res.redirect('/login')
+
+    // Calculate total active subbots globally
+    const totalSubbots = global.conns.filter(sock => sock?.user).length
+
     res.render('dashboard', {
-        username: req.signedCookies.user
+        username: req.signedCookies.user,
+        totalSubbots: totalSubbots
     })
 })
 
