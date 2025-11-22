@@ -10,7 +10,7 @@ conn.sendMessage(m.chat, { text: teks, mentions: participants.map((a) => a.id) }
 }
 
 handler.help = ['todos']
-handler.tags = ['group']
+handler.tags = ['grupo']
 handler.command = ['todos', 'invocar', 'tagall']
 handler.admin = true
 handler.group = true
