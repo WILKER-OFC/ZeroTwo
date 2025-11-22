@@ -1,6 +1,8 @@
 import moment from "moment-timezone"
 import fetch from "node-fetch"
 
+const { prepareWAMessageMedia, generateWAMessageFromContent, proto } = (await import("@whiskeysockets/baileys")).default
+
 let handler = async (m, { conn, usedPrefix }) => {
   try {
     let menu = {}
@@ -53,37 +55,66 @@ let handler = async (m, { conn, usedPrefix }) => {
       txt += `┗━━━━━━━━━━━━━━━━━━\n`
     }
 
+    let mediaMessage = null
     let thumbnailBuffer = null
-    try {
-      if (bannerUrl) {
+
+    if (bannerUrl) {
+      try {
         const res = await fetch(bannerUrl)
-        thumbnailBuffer = await res.buffer()
+        const buffer = await res.buffer()
+        thumbnailBuffer = buffer
+        
+        mediaMessage = await prepareWAMessageMedia({ image: buffer }, { upload: conn.waUploadToServer })
+      } catch (e) {
+        console.error(e)
       }
-    } catch (e) {
-      console.error(e)
     }
 
-    await conn.sendMessage(
-      m.chat,
-      {
-        text: `꒷︶꒷꒥꒷‧₊˚૮꒰˵•ᵜ•˵꒱ა‧₊˚꒷︶꒷꒥꒷
-`, 
-        footer: txt, 
-        contextInfo: {
-          mentionedJid: [m.sender],
-          externalAdReply: {
-            title: "⋆˚❏ 𝖬𝖾𝗇𝗎 𝖽𝖾 𝖼𝗈𝗆𝖺𝗇𝖽𝗈𝗌",
-            body: "Invitación al grupo oficial",
-            thumbnail: thumbnailBuffer,
-            thumbnailUrl: "https://chat.whatsapp.com/Ca25rmjW0qKJRIw9rzMaYA?mode=wwt",
-            sourceUrl: "https://chat.whatsapp.com/Ca25rmjW0qKJRIw9rzMaYA?mode=wwt",
-            mediaType: 1,
-            renderLargerThumbnail: true
+    const msg = generateWAMessageFromContent(m.chat, {
+      viewOnceMessage: {
+        message: {
+          interactiveMessage: {
+            body: { 
+              text: "꒷︶꒷꒥꒷‧₊˚૮꒰˵•ᵜ•˵꒱ა‧₊˚꒷︶꒷꒥꒷" 
+            },
+            footer: { 
+              text: txt 
+            },
+            header: {
+              hasMediaAttachment: !!mediaMessage,
+              imageMessage: mediaMessage ? mediaMessage.imageMessage : null
+            },
+            nativeFlowMessage: {
+              buttons: [
+                {
+                  name: "cta_url",
+                  buttonParamsJson: JSON.stringify({
+                    display_text: "Canal",
+                    url: "https://chat.whatsapp.com/Ca25rmjW0qKJRIw9rzMaYA?mode=wwt",
+                    merchant_url: "https://chat.whatsapp.com/Ca25rmjW0qKJRIw9rzMaYA?mode=wwt"
+                  })
+                }
+              ],
+              messageParamsJson: ""
+            },
+            contextInfo: {
+              mentionedJid: [m.sender],
+              externalAdReply: {
+                title: "⋆˚❏ 𝖬𝖾𝗇𝗎 𝖽𝖾 𝖼𝗈𝗆𝖺𝗇𝖽𝗈𝗌",
+                body: "Invitación al grupo oficial",
+                thumbnail: thumbnailBuffer,
+                thumbnailUrl: "https://chat.whatsapp.com/Ca25rmjW0qKJRIw9rzMaYA?mode=wwt",
+                sourceUrl: "https://chat.whatsapp.com/Ca25rmjW0qKJRIw9rzMaYA?mode=wwt",
+                mediaType: 1,
+                renderLargerThumbnail: true
+              }
+            }
           }
         }
-      },
-      { quoted: m }
-    )
+      }
+    }, { quoted: m })
+
+    await conn.relayMessage(m.chat, msg.message, {})
 
   } catch (e) {
     console.error(e)
