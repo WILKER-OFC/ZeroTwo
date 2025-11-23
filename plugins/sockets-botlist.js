@@ -59,10 +59,11 @@ const botsGroup = groupBots.length > 0
         : "Activo desde ahora"
 
     const customName = isMainBot ? null : getSubBotCustomName(bot)
-    const showName = customName ? customName : "Sin nombre"
+    const showName = isMainBot
+        ? global.botname
+        : (customName || global.botname)
 
     const typeLabel = isMainBot ? "Principal" : "Sub-Bot"
-
     const mention = bot.replace(/[^0-9]/g, '')
 
     return `@${mention}\n> Nombre: ${showName}\n> Bot: ${typeLabel}\n> Online: ${uptime}`
