@@ -2,9 +2,8 @@ import fs from "fs"
 import path from "path"
 import ws from "ws"
 
-const handler = async (m, { conn, command, usedPrefix, participants }) => {
+const handler = async (m, { conn, usedPrefix, participants }) => {
 try {
-
 const users = [
     global.conn.user.jid,
     ...new Set(
@@ -13,22 +12,6 @@ const users = [
             .map((conn) => conn.user.jid)
     )
 ]
-
-function convertirMsADiasHorasMinutosSegundos(ms) {
-    const segundos = Math.floor(ms / 1000)
-    const minutos = Math.floor(segundos / 60)
-    const horas = Math.floor(minutos / 60)
-    const días = Math.floor(horas / 24)
-    const segRest = segundos % 60
-    const minRest = minutos % 60
-    const horasRest = horas % 24
-    let resultado = ""
-    if (días) resultado += `${días} días, `
-    if (horasRest) resultado += `${horasRest} horas, `
-    if (minRest) resultado += `${minRest} minutos, `
-    if (segRest) resultado += `${segRest} segundos`
-    return resultado.trim()
-}
 
 let groupBots = users.filter((bot) => participants.some((p) => p.id === bot))
 if (participants.some((p) => p.id === global.conn.user.jid) && !groupBots.includes(global.conn.user.jid)) {
@@ -48,43 +31,33 @@ function getSubBotCustomName(jid) {
 }
 
 const botsGroup = groupBots.length > 0
-? groupBots.map((bot) => {
-    const isMainBot = bot === global.conn.user.jid
-    const v = global.conns.find((conn) => conn.user.jid === bot)
+    ? groupBots.map((bot) => {
+        const isMainBot = bot === global.conn.user.jid
+        const customName = isMainBot ? null : getSubBotCustomName(bot)
+        const showName = isMainBot ? (global.botname || 'Bot') : (customName || 'Sub-Bot')
+        const typeLabel = isMainBot ? "Principal" : "Sub"
+        const mention = bot.replace(/[^0-9]/g, '')
 
-    const uptime = isMainBot
-        ? convertirMsADiasHorasMinutosSegundos(Date.now() - global.conn.uptime)
-        : v?.uptime
-        ? convertirMsADiasHorasMinutosSegundos(Date.now() - v.uptime)
-        : "Activo desde ahora"
+        return `✰ *[${typeLabel} • ${showName}]* › @${mention}`
+    }).join("\n")
+    : `_No hay bots vinculados en este chat._`
 
-    const customName = isMainBot ? null : getSubBotCustomName(bot)
-    const showName = isMainBot
-        ? global.botname
-        : (customName || global.botname)
+const total = users.length
+const subs = total - 1
 
-    const typeLabel = isMainBot ? "Principal" : "Sub-Bot"
-    const mention = bot.replace(/[^0-9]/g, '')
-
-    return `@${mention}\n> Nombre: ${showName}\n> Bot: ${typeLabel}\n> Online: ${uptime}`
-}).join("\n\n")
-: `✧ No hay bots activos en este grupo`
-
-const message = `*「 ✦ 」 Lista de bots activos*
-
-❀ Principal: *1*
-✿ Subs: *${users.length - 1}*
-
-❏ En este grupo: *${groupBots.length}* bots
-${botsGroup}`
+const message = `❀ *Lista de Bots Activos (${total} Sesiones)*\n\n` +
+    `Resumen global:\n` +
+    `✰ *Principal › 1 | Subs › ${subs} | En este grupo › ${groupBots.length}*\n\n` +
+    `${botsGroup}\n\n` +
+    `_Mostrando usuarios conectados al sistema actualmente._\n` +
+    `↺ Lista actualizada en tiempo real.`
 
 const mentionList = groupBots.map(bot => bot.endsWith("@s.whatsapp.net") ? bot : `${bot}@s.whatsapp.net`)
-rcanal.contextInfo.mentionedJid = mentionList
 
-await conn.sendMessage(m.chat, { text: message, ...rcanal }, { quoted: m })
+await conn.sendMessage(m.chat, { text: message, mentions: mentionList }, { quoted: m })
 
 } catch (error) {
-m.reply(`⚠︎ Se ha producido un problema.\n> Usa *${usedPrefix}report* para informarlo.\n\n${error.message}`)
+m.reply(`❀ *Ocurrió un error interno.*\n\nDetalles:\n✰ *${error.message}*`)
 }}
 
 handler.tags = ["serbot"]
