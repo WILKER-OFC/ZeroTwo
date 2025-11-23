@@ -51,6 +51,7 @@ const botsGroup = groupBots.length > 0
 ? groupBots.map((bot) => {
     const isMainBot = bot === global.conn.user.jid
     const v = global.conns.find((conn) => conn.user.jid === bot)
+
     const uptime = isMainBot
         ? convertirMsADiasHorasMinutosSegundos(Date.now() - global.conn.uptime)
         : v?.uptime
@@ -58,10 +59,13 @@ const botsGroup = groupBots.length > 0
         : "Activo desde ahora"
 
     const customName = isMainBot ? null : getSubBotCustomName(bot)
-    const botName = isMainBot ? "Principal" : (customName || "Sub-Bot")
+    const showName = customName ? customName : "Sin nombre"
+
+    const typeLabel = isMainBot ? "Principal" : "Sub-Bot"
 
     const mention = bot.replace(/[^0-9]/g, '')
-    return `@${mention}\n> Bot: ${botName}\n> Online: ${uptime}`
+
+    return `@${mention}\n> Nombre: ${showName}\n> Bot: ${typeLabel}\n> Online: ${uptime}`
 }).join("\n\n")
 : `✧ No hay bots activos en este grupo`
 
