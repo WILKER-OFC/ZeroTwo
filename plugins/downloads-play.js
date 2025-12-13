@@ -18,10 +18,10 @@ const { title, thumbnail, timestamp, views, url, author, seconds } = result
 if (seconds > 1800) throw '✰ *El contenido excede los 30 minutos.*'
 
 const vistas = formatViews(views)
-const info = `❀ Título » ${title}\n` +
-             `❖ Autor » ${author.name}\n` +
-             `❏ Duración » ${timestamp} (${vistas} vistas)\n` +
-             `🜸 Link » ${url}`
+const info = `❀ *Título* » ${title}\n` +
+             `❖ *Autor* » ${author.name}\n` +
+             `❏ *Duración* » ${timestamp} (${vistas} vistas)\n` +
+             `🜸 *Link* » ${url}`
 
 await conn.sendMessage(m.chat, { image: { url: thumbnail }, caption: info }, { quoted: m })
 
