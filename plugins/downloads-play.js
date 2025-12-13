@@ -31,7 +31,7 @@ const downloadUrl = isAudio ? await getAud(url) : await getVid(url)
 if (!downloadUrl) throw '✰ *No se pudo obtener el enlace de descarga, intente nuevamente.*'
 
 if (isAudio) {
-    await conn.sendMessage(m.chat, { audio: { url: downloadUrl }, mimetype: 'audio/ogg; codecs=opus', ptt: false }, { quoted: m })
+    await conn.sendMessage(m.chat, { audio: { url: downloadUrl }, mimetype: 'audio/mpeg', ptt: false }, { quoted: m })
 } else {
     await conn.sendMessage(m.chat, { video: { url: downloadUrl }, caption: `❀ *Archivo completado*`, fileName: `${title}.mp4`, mimetype: 'video/mp4' }, { quoted: m })
 }
