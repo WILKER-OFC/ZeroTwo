@@ -1,0 +1,144 @@
+import yts from "yt-search"
+import fetch from "node-fetch"
+
+const handler = async (m, { conn, text }) => {
+  if (!text) return m.reply("Escribe el nombre del video o un enlace de YouTube.")
+
+  await m.react("🖤")
+
+  try {
+    let url = text
+    let title = "Desconocido"
+    let authorName = "Desconocido"
+    let durationTimestamp = "Desconocida"
+    let views = "Desconocidas"
+    let thumbnail = ""
+
+    if (!text.startsWith("https://")) {
+      const res = await yts(text)
+      if (!res?.videos?.length) return m.reply("No encontré nada.")
+      const video = res.videos[0]
+      title = video.title
+      authorName = video.author?.name
+      durationTimestamp = video.timestamp
+      views = video.views
+      url = video.url
+      thumbnail = video.thumbnail
+    }
+
+    const caption = `👻 Friki bot — Selección 
+
+👻 Título: ${title}
+🤍 Canal: ${authorName}
+🖤 Duración: ${durationTimestamp}
+👁️ Vistas: ${views}
+
+👻 Elige qué deseas descargar:`
+
+    const buttons = [
+      { buttonId: `shadowaudio ${url}`, buttonText: { displayText: "🎧 Descargar Audio" }, type: 1 },
+      { buttonId: `shadowvideo ${url}`, buttonText: { displayText: "🎥 Descargar Video" }, type: 1 }
+    ]
+
+    await conn.sendMessage(
+      m.chat,
+      {
+        image: { url: thumbnail },
+        caption,
+        footer: "tech bot — Descargas",
+        buttons,
+        headerType: 4
+      },
+      { quoted: m }
+    )
+
+    await m.react("👻")
+
+  } catch (e) {
+    m.reply("Error: " + e.message)
+    m.react("⚠️")
+  }
+}
+
+handler.before = async (m, { conn }) => {
+  const selected = m?.message?.buttonsResponseMessage?.selectedButtonId
+  if (!selected) return
+
+  const parts = selected.split(" ")
+  const cmd = parts.shift()
+  const url = parts.join(" ")
+
+  if (cmd === "shadowaudio") {
+    return downloadMedia(conn, m, url, "mp3")
+  }
+
+  if (cmd === "shadowvideo") {
+    return downloadMedia(conn, m, url, "mp4")
+  }
+}
+
+const downloadMedia = async (conn, m, url, type) => {
+  try {
+    const msg = type === "mp3"
+      ? "👻 Friki bot — Descargando audio..."
+      : "👻 Friki bot — Descargando video..."
+
+    const sent = await conn.sendMessage(m.chat, { text: msg }, { quoted: m })
+
+    const apiUrl = type === "mp3"
+      ? `https://api-adonix.ultraplus.click/download/ytaudio?url=${encodeURIComponent(url)}&apikey=DemonKeytechbot`
+      : `https://api-adonix.ultraplus.click/download/ytvideo?url=${encodeURIComponent(url)}&apikey=DemonKeytechbot`
+
+    const r = await fetch(apiUrl)
+    const data = await r.json()
+
+    if (!data?.status || !data?.data?.url) return m.reply("No se pudo descargar el archivo.")
+
+    const fileUrl = data.data.url
+    const fileTitle = cleanName(data.data.title || "video")
+
+    if (type === "mp3") {
+      await conn.sendMessage(
+        m.chat,
+        {
+          audio: { url: fileUrl },
+          mimetype: "audio/mpeg",
+          fileName: fileTitle + ".mp3"
+        },
+        { quoted: m }
+      )
+    } else {
+      await conn.sendMessage(
+        m.chat,
+        {
+          video: { url: fileUrl },
+          mimetype: "video/mp4",
+          fileName: fileTitle + ".mp4"
+        },
+        { quoted: m }
+      )
+    }
+
+    await conn.sendMessage(
+      m.chat,
+      {
+        text: `👻 Friki bot — Completado\n\n🤍 Título: ${fileTitle}`,
+        edit: sent.key
+      }
+    )
+
+    await m.react("✅")
+
+  } catch (e) {
+    m.reply("Error: " + e.message)
+    m.react("❌")
+  }
+}
+
+const cleanName = (name) => name.replace(/[^\w\s-_.]/gi, "").substring(0, 50)
+
+handler.command = ["play", "yt", "ytsearch"]
+handler.tags = ["descargas"]
+handler.register = true
+
+export default handler
