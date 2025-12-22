@@ -17,9 +17,9 @@ global.yukiJadibts = true
 
 global.botname = '✿ 𝖠𝗂𝗄𝗈 𝖡𝗈𝗍'
 global.textbot = 'ᰔᩚ 𝖠𝗂𝗄𝗈 𝖡𝗈𝗍'
-global.dev = '© 𝗣𝗼𝘄𝗲𝗿𝗲𝗱 𝗯𝘆 𝗔𝗱𝗼,'
-global.author = '❀ 𝗠𝗮𝗱𝗲 𝘄𝗶𝘁𝗵 𝗔𝗱𝗼,'
-global.etiqueta = '𝗔𝗱𝗼,'
+global.dev = '© 𝗣𝗼𝘄𝗲𝗿𝗲𝗱 𝗯𝘆 𝗔𝗱𝗼,𝐰𝐢𝐥𝐤𝐞𝐫 𝐨𝐟𝐜'
+global.author = '❀ 𝗠𝗮𝗱𝗲 𝘄𝗶𝘁𝗵 𝗔𝗱𝗼,𝐰𝐢𝐥𝐤𝐞𝐫 𝐨𝐟𝐜'
+global.etiqueta = '𝗔𝗱𝗼,𝐰𝐢𝐥𝐤𝐞𝐫 𝐨𝐟𝐜'
 global.currency = '€ 𝖤𝖴𝖱𝖮𝖲'
 global.banner = "https://files.catbox.moe/8obt28.jpg"
 global.icono = "https://files.catbox.moe/hhxpb5.jpg"
