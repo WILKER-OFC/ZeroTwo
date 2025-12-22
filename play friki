@@ -4,7 +4,7 @@ import fetch from "node-fetch"
 const handler = async (m, { conn, text }) => {
   if (!text) return m.reply("Escribe el nombre del video o un enlace de YouTube.")
 
-  await m.react("🖤")
+  await m.react("⏰")
 
   try {
     let url = text
