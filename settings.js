@@ -5,7 +5,7 @@ import fs from "fs"
 
 global.botNumber = "" 
 
-global.owner = ["50493732693", "584242773183", "51921826291"]
+global.owner = ["50493732693", "584242773183", "5492644893953"]
 global.suittag = [""] 
 global.prems = []
 
@@ -17,9 +17,9 @@ global.yukiJadibts = true
 
 global.botname = '✿ 𝖠𝗂𝗄𝗈 𝖡𝗈𝗍'
 global.textbot = 'ᰔᩚ 𝖠𝗂𝗄𝗈 𝖡𝗈𝗍'
-global.dev = '© 𝗣𝗼𝘄𝗲𝗿𝗲𝗱 𝗯𝘆 𝗔𝗱𝗼, 𝗬𝗼𝘀𝘂𝗲'
-global.author = '❀ 𝗠𝗮𝗱𝗲 𝘄𝗶𝘁𝗵 𝗔𝗱𝗼, 𝗬𝗼𝘀𝘂𝗲'
-global.etiqueta = '𝗔𝗱𝗼, 𝗬𝗼𝘀𝘂𝗲'
+global.dev = '© 𝗣𝗼𝘄𝗲𝗿𝗲𝗱 𝗯𝘆 𝗔𝗱𝗼,'
+global.author = '❀ 𝗠𝗮𝗱𝗲 𝘄𝗶𝘁𝗵 𝗔𝗱𝗼,'
+global.etiqueta = '𝗔𝗱𝗼,'
 global.currency = '€ 𝖤𝖴𝖱𝖮𝖲'
 global.banner = "https://files.catbox.moe/8obt28.jpg"
 global.icono = "https://files.catbox.moe/hhxpb5.jpg"
