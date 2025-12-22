@@ -311,8 +311,8 @@ let handler = async (m, { conn, args }) => {
                 "name": "cta_url",
                 "buttonParamsJson": JSON.stringify({
                   "display_text": "✎ 𝖦𝗋𝗎𝗉𝗈 𝖮𝖿𝗂𝖼𝗂𝖺𝗅",
-                  "url": "https://chat.whatsapp.com/L8wHHYu0pI10fCs3cQ2DP1?mode=hqrt3",
-                  "merchant_url": "https://chat.whatsapp.com/L8wHHYu0pI10fCs3cQ2DP1?mode=hqrt3"
+                  "url": "https://chat.whatsapp.com/FQ59hW6PzNkDlPjiD2Uk9K",
+                  "merchant_url": "https://chat.whatsapp.com/FQ59hW6PzNkDlPjiD2Uk9K"
                 })
               }
             ]
