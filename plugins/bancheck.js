@@ -38,16 +38,16 @@ const handler = async (msg, { conn, text}) => {
 });
 
   try {
-    const url = `https://api.dead.lt/v1/bancheck?number=50768888888`;
-{
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "X-Api-Key": "evil",
- }
+    const response = await fetch(`https://api.dead.lt/v1/bancheck?number=50768888888`, {
+  method: "GET",
+  headers: {
+    "Accept": "application/json",
+    "X-Api-Key": "evil"
+  }
 });
 
-    const data = await response.json();
+     const data = await response.json();
+     return data
     if (!data.status) throw new Error("La API no respondió correctamente");
 
     const banInfo = data.data;
