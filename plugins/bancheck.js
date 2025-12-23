@@ -38,16 +38,16 @@ const handler = async (msg, { conn, text}) => {
 });
 
   try {
-    const response = await fetch(`https://api.dead.lt/v1/bancheck?number=50768888888`, {
-  method: "GET",
-  headers: {
-    "Accept": "application/json",
-    "X-Api-Key": "evil"
-  }
+    const url = `https://api.dead.lt/v1/bancheck?number=50768888888=${cleanNumber}&lang=es`;
+    const res = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "X-Api-Key": "evil",
+},
+      timeout: 15000,
 });
 
-     const data = await response.json();
-     return data
+    const data = await res.json();
     if (!data.status) throw new Error("La API no respondió correctamente");
 
     const banInfo = data.data;
@@ -102,7 +102,7 @@ const handler = async (msg, { conn, text}) => {
       errMsg += "⚠️ _Error interno del servicio_";
 }
 
-    errMsg += "\n\n> Powered by: *WILKER OFC*";
+    errMsg += "\n\n> Powered by: *Barboza*";
 
     await conn.sendMessage(chatID, { text: errMsg}, { quoted: msg});
     await conn.sendMessage(chatID, {
