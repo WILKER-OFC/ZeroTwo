@@ -38,14 +38,20 @@ const handler = async (msg, { conn, text}) => {
 });
 
   try {
-    const url = `https://api.dead.lt/v1/bancheck?number=50768888888`;
-    const res = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-        "X-Api-Key": "evil",
-},
-      timeout: 15000,
+    const number = "94779982729";
+const url = "https://api.dead.lt/v1/bancheck";
+const params = new URLSearchParams({ number, lang: "es" });
+
+const response = await fetch(`${url}?${params}`, {
+  method: "GET",
+  headers: {
+    "Accept": "application/json",
+    "X-Api-Key": "evil" /* Key Required. */
+  }
 });
+
+const data = await response.json();
+console.log(data);
 
     const data = await res.json();
     if (!data.status) throw new Error("La API no respondió correctamente");
