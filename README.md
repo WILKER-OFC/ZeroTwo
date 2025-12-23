@@ -1,7 +1,7 @@
-# ⭐ Michi wabot
+# ⭐ ZeroTwo
 
 <div align="center">
-  <img src="https://iili.io/FZQTsXR.jpg" alt="Michi-WaBot Logo" width="150"/>
+  <img src="https://iili.io/FZQTsXR.jpg" alt="ZeroTwo Logo" width="150"/>
   <br>
   <p>Un bot de WhatsApp ligero, confiable y fácil de usar, diseñado para la comunidad.</p>
 </div>
@@ -12,15 +12,15 @@
 
 Estos indicadores muestran el estado actualizado del proyecto en GitHub.
 
-![GitHub stars](https://img.shields.io/github/stars/WILKER-OFC/Michi-wabot?style=for-the-badge&logo=github&color=yellow)
-![GitHub forks](https://img.shields.io/github/forks/WILKER-OFC/Michi-wabot?style=for-the-badge&logo=github&color=blue)
-![GitHub last commit](https://img.shields.io/github/last-commit/WILKER-OFC/Michi-wabot?style=for-the-badge&logo=github&color=green)
+![GitHub stars](https://img.shields.io/github/stars/WILKER-OFC/ZeroTwo?style=for-the-badge&logo=github&color=yellow)
+![GitHub forks](https://img.shields.io/github/forks/WILKER-OFC/ZeroTwo?style=for-the-badge&logo=github&color=blue)
+![GitHub last commit](https://img.shields.io/github/last-commit/WILKER-OFC/ZeroTwo?style=for-the-badge&logo=github&color=green)
 
 ---
 
 ## 🤝 𝗖𝗿𝗲𝗱𝗶𝘁𝗼𝘀 𝘆 𝗔𝗴𝗿𝗮𝗱𝗲𝗰𝗶𝗺𝗶𝗲𝗻𝘁𝗼𝘀
 
-* **Creador y Mantenedor Principal:** [ado](https://github.com/WILKER-OFC)
+* **Creador y Mantenedor Principal:** [WILKER](https://github.com/WILKER-OFC)
 
     <div align="center">
       <a href="https://github.com/WILKER-OFC">
@@ -33,7 +33,7 @@ Estos indicadores muestran el estado actualizado del proyecto en GitHub.
 ## 🦖 𝗥𝗲𝗰𝘂𝗿𝘀𝗼𝘀 𝗔𝗱𝗶𝗰𝗶𝗼𝗻𝗮𝗹𝗲𝘀
 
 * **💚 Adonix-API:** Una API útil, que te puede servir.
-    * [**myapiadonix.vercel.app**](https://myapiadonix.vercel.app)
+    * [**api-adonix.ultraplus.click.app**](https://api-adonix.ultraplus.click.app)
 
 * **🌤 Kurayami Host:** Nuestro proveedor de hosting recomendado para proyectos.
     * <a href="https://dash.kurayamihost.dpdns.org">
