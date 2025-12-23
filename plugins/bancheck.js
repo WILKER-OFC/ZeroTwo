@@ -51,10 +51,7 @@ const response = await fetch(`${url}?${params}`, {
 });
 
 const data = await response.json();
-console.log(data);
-
-    const data = await res.json();
-    if (!data.status) throw new Error("La API no respondió correctamente");
+console.log(data):"La API no respondió correctamente");
 
     const banInfo = data.data;
     const check = "✓";
