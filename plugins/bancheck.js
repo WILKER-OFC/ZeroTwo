@@ -38,7 +38,8 @@ const handler = async (msg, { conn, text}) => {
 });
 
   try {
-    const url = `https://api.dead.lt/v1/bancheck?number=50768888888=${cleanNumber}&lang=es`;
+    const url = `https://api.dead.lt/v1/bancheck?number=50768888888,`;
+{
     const res = await fetch(url, {
       headers: {
         Accept: "application/json",
