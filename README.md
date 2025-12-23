@@ -33,7 +33,7 @@ Estos indicadores muestran el estado actualizado del proyecto en GitHub.
 ## 🦖 𝗥𝗲𝗰𝘂𝗿𝘀𝗼𝘀 𝗔𝗱𝗶𝗰𝗶𝗼𝗻𝗮𝗹𝗲𝘀
 
 * **💚 Adonix-API:** Una API útil, que te puede servir.
-    * [**api-adonix.ultraplus.click.app**](https://api-adonix.ultraplus.click.app)
+    * [**api-adonix.ultraplus.click.**](https://api-adonix.ultraplus.click.)
 
 * **🌤 Kurayami Host:** Nuestro proveedor de hosting recomendado para proyectos.
     * <a href="https://dash.kurayamihost.dpdns.org">
