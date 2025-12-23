@@ -18,50 +18,13 @@ Estos indicadores muestran el estado actualizado del proyecto en GitHub.
 
 ---
 
-## 💻 𝗚𝘂𝗶𝗮 𝗱𝗲 𝗜𝗻𝘀𝘁𝗮𝗹𝗮𝗰𝗶𝗼𝗻 𝗲𝗻 𝗧𝗲𝗿𝗺𝘂𝘅
-
-Sigue estos pasos para instalar y ejecutar Michi-WaBot en tu dispositivo.
-
-1.  **Concede Permisos de Almacenamiento**
-    ```bash
-    termux-setup-storage
-    ```
-
-2.  **Actualiza y Prepara el Entorno**
-    ```bash
-    apt update && apt upgrade -y
-    pkg install -y git nodejs ffmpeg imagemagick
-    ```
-
-3.  **Clona el Repositorio del Bot**
-    ```bash
-    git clone https://github.com/Ado-rgb/Michi-WaBot.git
-    ```
-
-4.  **Accede al Directorio del Proyecto**
-    ```bash
-    cd Michi-WaBot
-    ```
-
-5.  **Instala las Dependencias de Node.js**
-    ```bash
-    npm install
-    ```
-
-6.  **Inicia el Bot**
-    ```bash
-    npm start
-    ```
-
----
-
 ## 🤝 𝗖𝗿𝗲𝗱𝗶𝘁𝗼𝘀 𝘆 𝗔𝗴𝗿𝗮𝗱𝗲𝗰𝗶𝗺𝗶𝗲𝗻𝘁𝗼𝘀
 
-* **Creador y Mantenedor Principal:** [ado](https://github.com/Ado-rgb)
+* **Creador y Mantenedor Principal:** [ado](https://github.com/WILKER-OFC)
 
     <div align="center">
-      <a href="h">
-        <img src="https://github.com/Ado-rgb.png" alt="Ado's GitHub Profile Picture" width="80" style="border-radius:50%;" />
+      <a href="https://github.com/WILKER-OFC">
+        <img src="https://github.com/WILKER-OFC.png" alt="WILKER-OFC's GitHub Profile Picture" width="80" style="border-radius:50%;" />
       </a>
     </div>
 
