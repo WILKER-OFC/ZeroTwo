@@ -19,7 +19,7 @@ var handler = async (m, { conn }) => {
         return m.reply(`🎅 Ya reclamaste tu regalo navideño este año. Vuelve en:\n *${msToTime(timeRemaining)}*`);
     }
 
-    // Solo pesos como recompensa
+    // Solo € EUROS como recompensa
     let coinReward = pickRandom([5000, 10000, 15000, 20000]);
 
     user.coin = (user.coin || 0) + coinReward;
@@ -31,7 +31,7 @@ var handler = async (m, { conn }) => {
 
 ✨ Feliz Navidad viajero te encontraste con Aiko bot y te regalo algunas cosas...
 
-💸 Has recibido: *${coinReward} pesos*
+💸 Has recibido: *${coinReward} € EUROS*
 
 🎅 ¡Feliz Navidad te desea Aiko bot! 🎄
 `);
@@ -39,8 +39,8 @@ var handler = async (m, { conn }) => {
     user.christmas = new Date().getTime();
 }
 
-handler.help = ['navidad', 'christmas'];
-handler.tags = ['rpg'];
+handler.help = ['navidad2', 'christmas'];
+handler.tags = ['rpg2'];
 handler.command = ['navidad', 'christmas'];
 handler.group = true;
 handler.register = true;
