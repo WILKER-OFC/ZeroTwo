@@ -25,7 +25,7 @@ const info = `❀ *Título* » ${title}\n` +
 
 await conn.sendMessage(m.chat, { image: { url: thumbnail }, caption: info }, { quoted: m })
 
-const isAudio = ['play', 'yta', 'ytmp3', 'playaudio'].includes(command)
+const isAudio = ['play', 'yta', 'ytmp30', 'playaudio'].includes(command)
 const downloadUrl = isAudio ? await getAud(url) : await getVid(url)
 
 if (!downloadUrl) throw '✰ *No se pudo obtener el enlace de descarga, intente nuevamente.*'
