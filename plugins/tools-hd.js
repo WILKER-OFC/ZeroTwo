@@ -51,8 +51,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 
     await conn.sendMessage(m.chat, {
       image: buffer,
-      caption: '✅ *❀ Imagen mejorada
-» y procesada. con: `api adonix`*'
+      caption: '✅ *Imagen mejorada con éxito*'
     }, { quoted: m })
 
     await m.react('✅')
