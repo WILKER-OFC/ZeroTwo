@@ -1,15 +1,36 @@
 import fetch from 'node-fetch'
 import FormData from 'form-data'
 
-async function uploadImage(buffer) {
+// NEW: Uguu upload function (replaces Catbox)
+async function uploadToUguu(buffer) {
   const form = new FormData()
-  form.append('fileToUpload', buffer, 'image.jpg')
-  form.append('reqtype', 'fileupload')
+  // Uguu uses 'files[]' as the form field name for file uploads[citation:2]
+  form.append('files[]', buffer, 'image.jpg')
 
-  const res = await fetch('https://catbox.moe/user/api.php', { method: 'POST', body: form })
-  if (!res.ok) throw new Error('Error al subir la imagen')
-  return await res.text()
+  const res = await fetch('https://uguu.se/upload.php', {
+    method: 'POST',
+    body: form
+  })
+  
+  if (!res.ok) throw new Error(`Error uploading to Uguu: ${res.status}`)
+  
+  const data = await res.json()
+  // Uguu returns an array of uploaded files[citation:2]
+  if (!data.files || !data.files[0]) throw new Error('Uguu did not return a valid URL')
+  
+  return data.files[0].url
 }
+
+// OLD: Original Catbox function (kept for reference, now unused)
+// async function uploadImage(buffer) {
+//   const form = new FormData()
+//   form.append('fileToUpload', buffer, 'image.jpg')
+//   form.append('reqtype', 'fileupload')
+// 
+//   const res = await fetch('https://catbox.moe/user/api.php', { method: 'POST', body: form })
+//   if (!res.ok) throw new Error('Error al subir la imagen')
+//   return await res.text()
+// }
 
 let handler = async (m, { conn, usedPrefix, command }) => {
   try {
@@ -37,7 +58,8 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     let img = await q.download?.()
     if (!img) throw new Error('No pude descargar la imagen.')
 
-    let uploadedUrl = await uploadImage(img)
+    // CHANGED: Now uses Uguu instead of Catbox
+    let uploadedUrl = await uploadToUguu(img)
 
     const api = `https://api-adonix.ultraplus.click/canvas/hd?apikey=WilkerKeydukz9l6871&url=${encodeURIComponent(uploadedUrl)}`
     const res = await fetch(api)
@@ -60,7 +82,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     console.error(e)
     await m.react('✖️')
     await conn.sendMessage(m.chat, {
-      text: '❌ Error al mejorar la imagen, inténtalo más tarde.',
+      text: `❌ Error al mejorar la imagen: ${e.message}`,
       ...global.rcanal
     }, { quoted: m })
   }
