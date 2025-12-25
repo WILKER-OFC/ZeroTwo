@@ -4,7 +4,31 @@ if (!args[0]) return conn.reply(m.chat, `❀ Por favor, ingresa un enlace de *In
 let data = []
 const url = encodeURIComponent(args[0])
 await m.react('🕒')
+
+// API específica para Instagram
 if (/(instagram\.com)/i.test(args[0])) {
+try {
+const api = `https://api-adonix.ultraplus.click/download/instagram?apikey=WilkerKeydukz9l6871&url=${url}`
+const res = await fetch(api)
+const json = await res.json()
+if (json.status && json.data?.length) {
+data = json.data.map(v => v.url)
+}} catch (e) {}
+}
+
+// API específica para Facebook
+if (/(facebook\.com|fb\.watch)/i.test(args[0]) && !data.length) {
+try {
+const api = `https://api-adonix.ultraplus.click/download/facebook?apikey=WilkerKeydukz9l6871&url=${url}`
+const res = await fetch(api)
+const json = await res.json()
+if (json.status && json.result?.media?.video_hd) {
+data = [json.result.media.video_hd]
+}} catch (e) {}
+}
+
+// APIs alternativas como respaldo
+if (!data.length) {
 try {
 const api = `${global.APIs.adonix.url}/download/instagram?apikey=${global.APIs.adonix.key}&url=${url}`
 const res = await fetch(api)
@@ -13,7 +37,8 @@ if (json.status && json.data?.length) {
 data = json.data.map(v => v.url)
 }} catch (e) {}
 }
-if (/(facebook\.com|fb\.watch)/i.test(args[0]) && !data.length) {
+
+if (!data.length) {
 try {
 const api = `${global.APIs.adonix.url}/download/facebook?apikey=${global.APIs.adonix.key}&url=${url}`
 const res = await fetch(api)
@@ -22,6 +47,7 @@ if (json.status && json.result?.media?.video_hd) {
 data = [json.result.media.video_hd]
 }} catch (e) {}
 }
+
 if (!data.length) {
 try {
 const api = `${global.APIs.vreden.url}/api/igdownload?url=${url}`
@@ -31,6 +57,7 @@ if (json.resultado?.respuesta?.datos?.length) {
 data = json.resultado.respuesta.datos.map(v => v.url)
 }} catch (e) {}
 }
+
 if (!data.length) {
 try {
 const api = `${global.APIs.delirius.url}/download/instagram?url=${url}`
@@ -40,7 +67,9 @@ if (json.status && json.data?.length) {
 data = json.data.map(v => v.url)
 }} catch (e) {}
 }
+
 if (!data.length) return conn.reply(m.chat, `ꕥ No se pudo obtener el contenido.`, m)
+
 for (let media of data) {
 await conn.sendFile(m.chat, media, 'media.mp4', `❀ Aquí tienes ฅ^•ﻌ•^ฅ.`, m)
 await m.react('✔️')
