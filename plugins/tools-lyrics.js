@@ -12,26 +12,17 @@ if (json.status && (json.lyrics || json.lyrics === '')) {
 return { title: json.title || json.name || 'Desconocido', artists: json.artist || json.artists || 'Desconocido', lyrics: json.lyrics, image: json.image || null, url: json.url || null }}
 return null
 }
-let primaryRes = null
+let final = null
 try {
-const res = await fetch(`${global.APIs.delirius.url}/search/lyrics?query=${encodeURIComponent(text)}`)
-if (!res.ok) throw new Error(`Delirius HTTP: ${res.status}`)
+const adonixUrl = `https://api-adonix.ultraplus.click/search/lyrics?apikey=WilkerKeydukz9l6871&q=${encodeURIComponent(text)}`
+const res = await fetch(adonixUrl)
+if (!res.ok) throw new Error(`Adonix HTTP: ${res.status}`)
 const json = await res.json()
-primaryRes = normalize(json)
+final = normalize(json)
 } catch (e) {
-primaryRes = null
-}
-let final = primaryRes
-if (!final) {
-try {
-const adonixUrl = `${global.APIs.adonix.url}/search/lyrics?apikey=${global.APIs.adonix.key}&q=${encodeURIComponent(text)}`
-const res2 = await fetch(adonixUrl)
-if (!res2.ok) throw new Error(`Adonix HTTP: ${res2.status}`)
-const json2 = await res2.json()
-final = normalize(json2)
-} catch (e) {
+console.error('Error con API Adonix:', e)
 final = null
-}}
+}
 if (!final || !final.lyrics) {
 await m.react('✖️')
 return m.reply('ꕥ No se encontró la letra de la canción')
