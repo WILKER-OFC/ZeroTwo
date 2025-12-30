@@ -38,20 +38,17 @@ const handler = async (msg, { conn, text}) => {
 });
 
   try {
-    const number = "94779982729";
-const url = "https://api.dead.lt/v1/bancheck";
-const params = new URLSearchParams({ number, lang: "es" });
-
-const response = await fetch(`${url}?${params}`, {
-  method: "GET",
-  headers: {
-    "Accept": "application/json",
-    "X-Api-Key": "evil" /* Key Required. */
-  }
+    const url = `https://io.tylarz.top/v1/bancheck?number=${cleanNumber}&lang=es`;
+    const res = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "X-Api-Key": "nami",
+},
+      timeout: 15000,
 });
 
-const data = await response.json();
-console.log(data):"La API no respondió correctamente");
+    const data = await res.json();
+    if (!data.status) throw new Error("La API no respondió correctamente");
 
     const banInfo = data.data;
     const check = "✓";
