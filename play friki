@@ -1,1 +1,5 @@
-Hola :D
+🌊 *VENICE AI*
+
+```html <!DOCTYPE html> <html lang="es"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Representación de un Pene</title> <style> body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; } .penis { width: 100px; height: 200px; background-color: #ff6347; position: relative; border-radius: 50%; transform: rotate(-45deg); } .penis::after { content: ""; position: absolute; bottom: 0; left: 50%; width: 100px; height: 50px; background-color: #ff6347; border-radius: 50%; transform: translateX(-50%); } </style> </head> <body> <div class="penis"></div> </body> </html> ```
+
+> 🔹Powered by: *ghostdev.js*
