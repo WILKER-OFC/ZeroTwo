@@ -1,6 +1,5 @@
-import acrcloud from "acrcloud"
+import fetch from 'node-fetch'
 
-const acr = new acrcloud({ host: "identify-ap-southeast-1.acrcloud.com", access_key: "ee1b81b47cf98cd73a0072a761558ab1", access_secret: "ya9OPe8onFAnNkyf9xMTK8qRyMGmsghfuHrIMmUI" })
 let handler = async (m, { conn, text, usedPrefix, command }) => {
 let q = m.quoted ? m.quoted : m
 if (!q.mimetype || (!q.mimetype.includes("audio") && !q.mimetype.includes("video"))) {
@@ -50,11 +49,60 @@ handler.group = true
 export default handler
 
 async function whatmusic(buffer) {
-let res = await acr.identify(buffer)
-let data = res?.metadata
-if (!data || !Array.isArray(data.music)) return []
-return data.music.map(a => ({ title: a.title, artist: a.artists?.[0]?.name || "Desconocido", duration: toTime(a.duration_ms), url: Object.keys(a.external_metadata || {}).map(i => i === "youtube" ? "https://youtu.be/" + a.external_metadata[i].vid : i === "deezer" ? "https://www.deezer.com/us/track/" + a.external_metadata[i].track.id : i === "spotify" ? "https://open.spotify.com/track/" + a.external_metadata[i].track.id : "").filter(Boolean) }))
+const apiUrl = 'https://api-adonix.ultraplus.click/tools/whatmusic?apikey=WilkerKeydukz9l6871'
+    
+try {
+const formData = new FormData()
+const blob = new Blob([buffer], { type: 'audio/mpeg' })
+formData.append('audio', blob, 'audio.mp3')
+
+const response = await fetch(apiUrl, {
+method: 'POST',
+body: formData
+})
+
+if (!response.ok) {
+throw new Error(`Error en la API: ${response.status}`)
 }
+
+const res = await response.json()
+
+// Adaptar la respuesta de la nueva API al formato esperado
+if (!res || !res.status || res.status !== true || !res.result) {
+return []
+}
+
+const result = res.result
+const musicData = []
+
+if (result.title || result.artist) {
+const enlaces = []
+if (result.youtube && result.youtube.url) {
+enlaces.push(result.youtube.url)
+}
+if (result.spotify && result.spotify.url) {
+enlaces.push(result.spotify.url)
+}
+if (result.deezer && result.deezer.url) {
+enlaces.push(result.deezer.url)
+}
+
+musicData.push({
+title: result.title || "Desconocido",
+artist: result.artist || "Desconocido",
+duration: toTime(result.duration_ms || 0),
+url: enlaces
+})
+}
+
+return musicData
+
+} catch (error) {
+console.error('Error en whatmusic:', error)
+return []
+}
+}
+
 function toTime(ms) {
 if (!ms || typeof ms !== "number") return "00:00"
 let m = Math.floor(ms / 60000)
