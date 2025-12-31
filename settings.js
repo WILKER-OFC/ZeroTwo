@@ -5,7 +5,7 @@ import fs from "fs"
 
 global.botNumber = "" 
 
-global.owner = ["50493732693", "584242773183", "5492644893953"]
+global.owner = ["5492644893953", "584242773183", "5492644893953"]
 global.suittag = [""] 
 global.prems = []
 
