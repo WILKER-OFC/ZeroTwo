@@ -44,35 +44,27 @@ let handler = async (m, { conn, args }) => {
 
   const footer = `*━━━━━━━━━━━━━━━━━━━━━━━━*`
 
-  let txt = `╭─── •• ─── ✦ ─── •• ───╮
-┊   *¡Hola! @${userId.split('@')[0]}*
-┊   *Soy ${botname}*
-┊   ${(conn.user.jid == global.conn.user.jid ? '𝗣𝗿𝗶𝗻𝗰𝗶𝗽𝗮𝗹' : '𝗦𝘂𝗯-𝗕𝗼𝘁')}
-╰─── •• ─── ✦ ─── •• ───╯
-
-╭─⊷ *𝐈𝐍𝐅𝐎𝐑𝐌𝐀𝐂𝐈Ó𝐍*
-│ ✦ *Usuarios*: ${totalreg.toLocaleString()}
-│ ✦ *Versión*: ${vs}
-│ ✦ *Comandos*: ${totalCommands}
-│ ✦ *Librería*: ${libreria}
-╰───────────────
-
-*📜 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒 𝐃𝐈𝐒𝐏𝐎𝐍𝐈𝐁𝐋𝐄𝐒*
-`
+  let txt = `*¡Hola! @${userId.split('@')[0]}* | *Soy ${botname}*\n`
+  txt += `*${botname}* | ${(conn.user.jid == global.conn.user.jid ? 'Principal' : 'Sub-Bot')}\n`
+  txt += `─•─•─•─•─•─•─•─•─•─•─\n\n`
+  
+  txt += `*INFORMACIÓN*\n`
+  txt += `• *Usuarios*: ${totalreg.toLocaleString()}\n`
+  txt += `• *Versión*: ${vs}\n`
+  txt += `• *Comandos*: ${totalCommands}\n`
+  txt += `• *Librería*: ${libreria}\n\n`
+  
+  txt += `*COMANDOS DISPONIBLES*\n`
 
   sections.forEach(section => {
-    txt += `\n╭─⊷ *${section.title}*
-`
+    txt += `\n• *${section.title}*\n`
     section.commands.forEach(([command, description], index) => {
-      txt += `│ ✦ ${command}
-│   › ${description}
-`
-      if (index < section.commands.length - 1) {
-        txt += `│
-`
+      txt += `  ${command}`
+      if (description) {
+        txt += ` - ${description}`
       }
+      txt += `\n`
     })
-    txt += `╰───────────────\n`
   })
 
   let media = await generateWAMessageContent({ 
