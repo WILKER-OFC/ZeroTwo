@@ -28,7 +28,8 @@ let handler = async (m, { conn, args }) => {
 
 *📜 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒 𝐃𝐈𝐒𝐏𝐎𝐍𝐈𝐁𝐋𝐄𝐒*
 `
-
+╭─⊷ *Subbots*
+╰──────────────
   sections.forEach(section => {
     txt += `\n╭─⊷ *${section.title}*
 `
