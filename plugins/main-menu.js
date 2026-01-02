@@ -8,7 +8,38 @@ let handler = async (m, { conn, args }) => {
   let totalCommands = Object.values(global.plugins).filter((v) => v.help && v.tags).length
 
   const sections = [
-    // ... (tus secciones permanecen iguales)
+    {
+      title: "ECONOMÍA",
+      commands: [
+        [".crime", "Comando de crimen"],
+        [".depositar", "Depositar dinero"],
+        [".minar", "Minar recursos"],
+        [".pay", "Pagar a alguien"],
+        [".robar", "Robar a otros"],
+        [".slut", "Trabajo de prostitución"],
+        [".work", "Trabajar"]
+      ]
+    },
+    {
+      title: "DESCARGAS",
+      commands: [
+        [".apk", "Descargar APK"],
+        [".playvideo", "Reproducir video"],
+        [".mediafire", "Descargar de Mediafire"],
+        [".tiktokvid", "Descargar video de TikTok"],
+        [".tiktok", "Descargar TikTok"],
+        [".play8", "Reproducir audio/video 8"],
+        [".playaudio", "Reproducir audio"],
+        [".ytmp4doc", "Descargar YouTube como MP4"],
+        [".play4 <búsqueda>", "Buscar y reproducir"]
+      ]
+    },
+    {
+      title: "HERRAMIENTAS",
+      commands: [
+        [".its <text>", "Herramientas de texto"]
+      ]
+    }
   ]
 
   const footer = `*━━━━━━━━━━━━━━━━━━━━━━━━*`
@@ -28,8 +59,7 @@ let handler = async (m, { conn, args }) => {
 
 *📜 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒 𝐃𝐈𝐒𝐏𝐎𝐍𝐈𝐁𝐋𝐄𝐒*
 `
-'╭─⊷ *Subbots*
-╰──────────────'
+
   sections.forEach(section => {
     txt += `\n╭─⊷ *${section.title}*
 `
