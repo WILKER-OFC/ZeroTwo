@@ -263,7 +263,8 @@ let handler = async (m, { conn, args }) => {
 
 > _*Aquí tienes la lista de comandos.*_
 ╭┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-│❍ *Usuarios* » ${totalreg.toLocaleString()}
+│❍ *Usuarios* »
+{totalreg.toLocaleString()}
 │❏*Versión* » ${vs}
 │❀*Plugins* » ${totalCommands}
 │★*Librería* » ${libreria}
